@@ -1,14 +1,14 @@
 
 import * as React from 'react';
-import Main from './Main';
+import ItemListContainer from './ItemListContainer';
 
 
 export default function MainContainer (){
    const listPaintings=["abstracto","floral","paisajismo" ];
     return(
         <>
-        Main Container - mi body 
-        <Main listProducts={listPaintings}/>
+        Mi body
+        <ItemListContainer listProducts={listPaintings}/>
         </>
     );
 

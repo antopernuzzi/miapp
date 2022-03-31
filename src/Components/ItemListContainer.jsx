@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 
-export default function Main({listProducts}){
+export default function ItemListContainer({listProducts}){
 
     return(
         <>
