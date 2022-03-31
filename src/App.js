@@ -1,14 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import MyNav from './Components/MyNav';
+import NavBar from './Components/NavBar';
+import MainContainer from './Components/MainContainer';
 
 function App() {
 
 
   return (
     <>
-    <MyNav/>
+    <NavBar/>
+    <MainContainer/>
     
     </>
   );
