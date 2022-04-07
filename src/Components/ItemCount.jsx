@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -26,10 +26,13 @@ export default function ItemCount({ initial, stock }) {
   function onAdd() {
     alert("Genial! agregaste " + count + " items al carrito.");
   }
+  //use effect es un hook que se ejecuta cuando el componente se monta  o se actualiza      //       
+  useEffect(() => {console.log("Total: "+ count) }, [count]);
+  
 
   return (
     <>
-      <br />
+      <br />  
       Contador de items
       <br />
       <Box
