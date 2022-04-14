@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Grid from '@mui/material/Grid';
+import { Link } from "react-router-dom";
 
 export default function Item({prod}){
     return(
@@ -46,7 +47,10 @@ export default function Item({prod}){
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <Button size="small">Ver detalle</Button>
+        <Button size="small">
+        <Link style={{textDecoration:"none", color:"#1876D1" }} to={`/item/${prod.id}`}>Ver detalle </Link>
+          </Button> 
+        
       </CardActions>
     </Card>
     

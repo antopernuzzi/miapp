@@ -13,8 +13,10 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import CartWidget from './CartWidget';
+import { Link } from "react-router-dom";
 
-const pages = ['Cuadros', 'Exposiciones', 'Artistas'];
+
+const pages = ['Cuadros', 'Objetos', 'Artistas'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
@@ -30,10 +32,13 @@ const NavBar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  
+    
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    
   };
 
   return (
@@ -46,7 +51,8 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            ARTAPP
+             <Link style={{textDecoration:"none", color:"white"}} to={`/`}>ARTAPP</Link>
+            
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -80,7 +86,9 @@ const NavBar = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center">
+                    <Link style={{textDecoration:"none", color:"white"}}to={`/category/${page}`}>{page}</Link>
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -91,16 +99,19 @@ const NavBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            ARTAPP
+              <Link style={{textDecoration:"none", color:"white"}} to={`/`}>ARTAPP</Link>
+            
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
+              
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                
+                <Link style={{textDecoration:"none", color:"white"}} to={`/category/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>

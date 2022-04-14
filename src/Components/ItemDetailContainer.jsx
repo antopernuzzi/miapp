@@ -1,16 +1,20 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import ItemDetail from "./ItemDetail";
-import productList from "../data/productsList";
+import {getProduct} from "../data/productsList";
+import { useParams } from 'react-router-dom';
+import { Container } from "@mui/material";
 
 
 export default function ItemDetailContainer() {
-  const [producto, setProducto] = useState({});
+  const [product, setProduct] = useState({});
+  const{id}=useParams();
 
   useEffect(() => {
     const promesa = new Promise((resolve, reject) => {
+      const selectProduct = getProduct(1);
       setTimeout(() => {
-        resolve(productList[0]); //aca lo marca como resuelto despues de 2 segundos
+        resolve(selectProduct); //aca lo marca como resuelto despues de 2 segundos
       }, 2000);
       
     });
@@ -19,7 +23,7 @@ export default function ItemDetailContainer() {
     promesa
       .then((res) => {
         console.log("ejecuto la promesa detalle item");
-        setProducto(res); //actualiza los productos con lo que resolvio en la promesa
+        setProduct(res); //actualiza los productos con lo que resolvio en la promesa
       })
       .catch((err) => {
         console.log("Ha ocurrido un error ");
@@ -28,8 +32,11 @@ export default function ItemDetailContainer() {
 
   return (
     <>
+    <Container>
       Detalle de Item
-      <ItemDetail prod={producto}/>
+      <ItemDetail prod={product}/>
+    </Container>
+      
     </>
   );
 }
