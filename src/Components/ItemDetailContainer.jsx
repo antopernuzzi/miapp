@@ -12,7 +12,7 @@ export default function ItemDetailContainer() {
 
   useEffect(() => {
     const promesa = new Promise((resolve, reject) => {
-      const selectProduct = getProduct(1);
+      const selectProduct = getProduct(id);
       setTimeout(() => {
         resolve(selectProduct); //aca lo marca como resuelto despues de 2 segundos
       }, 2000);

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-export default function ItemCount({ initial, stock }) {
+export default function ItemCount({ initial, stock , onAdd}) {
   // useState recibe un parámetro: el valor inicial del estado
   // y devuelve un array de dos posiciones:
   //  la primera count, tiene el valor del estado inicial
@@ -23,9 +23,6 @@ export default function ItemCount({ initial, stock }) {
     }
   }
 
-  function onAdd() {
-    alert("Genial! agregaste " + count + " items al carrito.");
-  }
   //use effect es un hook que se ejecuta cuando el componente se monta  o se actualiza      //       
   useEffect(() => {console.log("Total: "+ count) }, [count]);
   
@@ -56,7 +53,7 @@ export default function ItemCount({ initial, stock }) {
           textAlign: "center", 
         }}
       >
-             <Button onClick={onAdd} variant="contained" size="medium">Comprar</Button>
+             <Button onClick={()=>onAdd(count)} variant="contained" size="medium">Comprar</Button>
       </Grid>
     </>
   );
