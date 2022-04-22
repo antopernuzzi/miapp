@@ -16,6 +16,7 @@ import CartWidget from './CartWidget';
 import { Link } from "react-router-dom";
 
 
+
 const pages = ['Cuadros', 'Objetos', 'Artistas'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -40,6 +41,7 @@ const NavBar = () => {
     setAnchorElUser(null);
     
   };
+ 
 
   return (
     <AppBar position="static">
@@ -117,7 +119,7 @@ const NavBar = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <CartWidget cant={10}/>
+            <CartWidget />
           </Box>
         </Toolbar>
       </Container>

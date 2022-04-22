@@ -8,12 +8,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ArtistListContainer from './Components/ArtistListContainer';
 import ItemListContainer from './Components/ItemListContainer';
 import Cart from './Components/Cart';
+import CartContext from './Context/CartContext';
 
 function App() {
 
 
   return (
     <>
+    <CartContext>
       <BrowserRouter>
         <NavBar />
         <Routes>
@@ -24,7 +26,7 @@ function App() {
           <Route exact path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
-      
+      </CartContext>
 
     
 

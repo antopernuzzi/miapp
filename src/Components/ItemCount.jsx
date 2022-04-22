@@ -3,13 +3,17 @@ import { useState, useEffect} from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import { Context } from "../Context/CartContext";
 
-export default function ItemCount({ initial, stock , onAdd}) {
+
+export default function ItemCount({ initial, stock , onAdd, item}) {
   // useState recibe un parámetro: el valor inicial del estado
   // y devuelve un array de dos posiciones:
   //  la primera count, tiene el valor del estado inicial
   //  la segunda setCount, el método para actualizar el estado
   const [count, setCount] = useState(initial);
+
+  let {addItem} = React.useContext(Context);
 
   function adding() {
     if (count < stock) {
@@ -53,7 +57,11 @@ export default function ItemCount({ initial, stock , onAdd}) {
           textAlign: "center", 
         }}
       >
-             <Button onClick={()=>onAdd(count)} variant="contained" size="medium">Comprar</Button>
+             <Button onClick={() => {
+             
+              addItem({ ...item});
+            
+            }} variant="contained" size="medium">Comprar</Button>
       </Grid>
     </>
   );

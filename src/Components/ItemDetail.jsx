@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
+
 export default function ItemDetail({ prod }) {
   const [count, setCount] = React.useState(0);
 
@@ -50,7 +51,7 @@ export default function ItemDetail({ prod }) {
           <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
             {/*si la cantidad es mayor a 0 entonces muestro el boton de agregar al carrito*/}
             {count <= 0 ? (
-              <ItemCount initial={0} stock={prod.stock} onAdd={onAdd} />
+              <ItemCount initial={0} stock={prod.stock} onAdd={onAdd} item={prod} />
             ) : (
               <Button variant="outlined" size="small">
                 <Link
