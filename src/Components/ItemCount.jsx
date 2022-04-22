@@ -13,6 +13,7 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
   //  la segunda setCount, el método para actualizar el estado
   const [count, setCount] = useState(initial);
 
+
   let {addItem} = React.useContext(Context);
 
   function adding() {
@@ -28,7 +29,7 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
   }
 
   //use effect es un hook que se ejecuta cuando el componente se monta  o se actualiza      //       
-  useEffect(() => {console.log("Total: "+ count) }, [count]);
+  // useEffect(() => {console.log("Total a: "+ count) }, [count]);
   
 
   return (
@@ -58,8 +59,9 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
         }}
       >
              <Button onClick={() => {
-             
-              addItem({ ...item});
+              addItem({ ...item, quantity: count });
+              
+              onAdd(count);
             
             }} variant="contained" size="medium">Comprar</Button>
       </Grid>
