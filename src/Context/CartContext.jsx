@@ -13,7 +13,7 @@ export default function CartContext({ children }) {
     setCart([]);
   }
   //Agregar producto al carrito
-  function addItem(item) {
+  function addItem(item,quantity) {
    // uso findIndex porque nos va a permitir acceder a la posición del array del producto que ya existe en nuestro cart
     // para modificar la cantidad del producto
     // en caso de que el producto no esté en nuestro cart, nos devuelve -1 y ahí agregamos nuestro producto al cart
@@ -21,7 +21,7 @@ export default function CartContext({ children }) {
     const index = cart.findIndex((cartItem) => cartItem.id === item.id);
     if (index !== -1) {
       const newCart = [...cart];
-      newCart[index].count = newCart[index].count + item.count;
+      newCart[index].quantity = newCart[index].quantity + item.quantity;
       setCart(newCart);
     } else {
       setCart([...cart, item]);
