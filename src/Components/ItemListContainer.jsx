@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 export default function ItemListContainer() {
   const [products, setProducts] = useState([]); //quiero que cuando algo cambie se renderice
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const { categoryId } = useParams(); //hook que uso para armar la ruta dinamica
 
   useEffect(() => {
@@ -29,9 +30,11 @@ export default function ItemListContainer() {
       .then((res) => {
         console.log("ejecuto la promesa");
         setProducts(res); //actualiza los productos con lo que resolvio en la promesa
+        setError(false);
       })
       .catch((err) => {
         console.log("Ha ocurrido un error ");
+        setError(true);
       })
       .finally(() => {
         setLoading(false);
@@ -51,6 +54,7 @@ export default function ItemListContainer() {
             marginTop: "10px",
           }}
         >
+          {error && <p>Error al cargar los productos</p>}
           {loading ? (
             <SpinnerDotted style={{ color: "#1876D1" }} />
           ) : (

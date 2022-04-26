@@ -59,8 +59,8 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
         }}
       >
              <Button onClick={() => {
-              addItem({ ...item, quantity: count });
-              
+              //  le paso un objeto que tenga todas las propiedades de item y ademas cantidad
+              addItem({ ...item, quantity: count }); 
               onAdd(count);
             
             }} variant="contained" size="medium">Comprar</Button>

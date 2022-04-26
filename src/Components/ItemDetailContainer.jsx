@@ -8,14 +8,15 @@ import { Container } from "@mui/material";
 
 export default function ItemDetailContainer() {
   const [product, setProduct] = useState({});
+  const [error, setError] = useState(false);
   const{id}=useParams();
 
   useEffect(() => {
     const promesa = new Promise((resolve, reject) => {
       const selectProduct = getProduct(id);
       setTimeout(() => {
-        resolve(selectProduct); //aca lo marca como resuelto despues de 2 segundos
-      }, 2000);
+        resolve(selectProduct); //aca lo marca como resuelto despues de 1 segundo
+      }, 1000);
       
     });
 
@@ -24,9 +25,11 @@ export default function ItemDetailContainer() {
       .then((res) => {
         console.log("ejecuto la promesa detalle item");
         setProduct(res); //actualiza los productos con lo que resolvio en la promesa
+        setError(false);
       })
       .catch((err) => {
         console.log("Ha ocurrido un error ");
+        setError(true);
       });
   }, []);
 
