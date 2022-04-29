@@ -28,17 +28,7 @@ import { Button } from "@mui/material";
 export default function CartList() {
   let { cart, subtotal, totalPrice, tax, TAX_RATE ,removeItem} = React.useContext(Context);
 
-  // const Demo = styled('div')(({ theme }) => ({
-  //     backgroundColor: theme.palette.background.paper,
-  //   }));
-
-  //   function generate(element) {
-  //     return [0, 1, 2].map((value) =>
-  //       React.cloneElement(element, {
-  //         key: value,
-  //       }),
-  //     );
-  //   }
+  
 
   function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -71,7 +61,7 @@ export default function CartList() {
                   <TableCell><Avatar>
                   {item.image}
                     </Avatar></TableCell>
-                <TableCell>{item.name}</TableCell>
+                <TableCell>{item.title}</TableCell>
                 <TableCell align="right">{item.quantity}</TableCell>
                 <TableCell align="right">{item.price}</TableCell>
                 <TableCell align="right">

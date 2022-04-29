@@ -28,13 +28,13 @@ export default function Item({prod}){
   <Card sx={{ maxWidth: 345 , height:400}}>
       <CardMedia
         component="img"
-        alt={prod.name}
+        alt={prod.title}
         height="200"
         image={prod.image}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-        {prod.name}
+        {prod.title}
         </Typography>
         <Typography gutterBottom component="div">
         ${prod.price}

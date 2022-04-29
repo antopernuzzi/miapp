@@ -31,7 +31,7 @@ export default function ItemDetail({ prod }) {
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <CardContent sx={{ flex: "1 0 auto" }}>
             <Typography component="div" variant="h5">
-              {prod.name}
+              {prod.title}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -68,7 +68,7 @@ export default function ItemDetail({ prod }) {
           component="img"
           sx={{ width: "100%", height: "100%", objectFit: "cover" }}
           image={prod.image}
-          alt={prod.name}
+          alt={prod.title}
         />
       </Card>
     </>

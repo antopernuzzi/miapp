@@ -4,6 +4,7 @@ import ItemDetail from "./ItemDetail";
 import {getProduct} from "../data/productsList";
 import { useParams } from 'react-router-dom';
 import { Container } from "@mui/material";
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 
 
 export default function ItemDetailContainer() {
@@ -12,25 +13,18 @@ export default function ItemDetailContainer() {
   const{id}=useParams();
 
   useEffect(() => {
-    const promesa = new Promise((resolve, reject) => {
-      const selectProduct = getProduct(id);
-      setTimeout(() => {
-        resolve(selectProduct); //aca lo marca como resuelto despues de 1 segundo
-      }, 1000);
-      
-    });
-
-    //Si se resolvio entonces con then hago lo que quiero
-    promesa
-      .then((res) => {
-        console.log("ejecuto la promesa detalle item");
-        setProduct(res); //actualiza los productos con lo que resolvio en la promesa
-        setError(false);
-      })
-      .catch((err) => {
+    const db = getFirestore();
+  
+    const selectProduct = doc(db, 'products', id);
+    getDoc(selectProduct).then((res) => {
+      setProduct({ id: res.id, ...res.data() });
+      setError(false);
+    })
+    .catch((err) => {
         console.log("Ha ocurrido un error ");
         setError(true);
       });
+
   }, []);
 
   return (

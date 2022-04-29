@@ -8,6 +8,13 @@ import { SpinnerDotted } from "spinners-react";
 import { color } from "@mui/system";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 
 export default function ItemListContainer() {
   const [products, setProducts] = useState([]); //quiero que cuando algo cambie se renderice
@@ -16,21 +23,31 @@ export default function ItemListContainer() {
   const { categoryId } = useParams(); //hook que uso para armar la ruta dinamica
 
   useEffect(() => {
-    const promesa = new Promise((resolve, reject) => {
-      const listProducts = getProducts(categoryId);
-      setLoading(true);
-      setTimeout(() => {
-        resolve(listProducts); //aca lo marca como resuelto despues de 2 segundos
-      }, 2000);
-      //reject(null)
-    });
+    const db = getFirestore();
+    console.log(categoryId);
 
-    //Si se resolvio entonces con then actualizo mis productos
-    promesa
+    let listProducts;
+
+    if (!categoryId) {
+      listProducts = collection(db, "products");
+      console.log("home sin categoria");
+    } else {
+      console.log("entro al filtro por categoria");
+
+      listProducts = query(
+        collection(db, "products"),
+        where("category", "==", categoryId)
+      );
+    }
+    getDocs(listProducts)
       .then((res) => {
-        console.log("ejecuto la promesa");
-        setProducts(res); //actualiza los productos con lo que resolvio en la promesa
+        /* let productos = [...res.docs];
+      productos = productos.map((item) => ({ id: item.id, ...item.data() }));
+      setProductos(productos); */
+
+        setProducts(res.docs.map((item) => ({ id: item.id, ...item.data() })));
         setError(false);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Ha ocurrido un error ");
