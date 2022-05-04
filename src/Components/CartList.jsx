@@ -24,6 +24,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Context } from "../Context/CartContext";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function CartList() {
   let { cart, subtotal, totalPrice, tax, TAX_RATE ,removeItem} = React.useContext(Context);
@@ -95,11 +96,13 @@ export default function CartList() {
           </TableBody>
           
         </Table>
+        <Link to={"/checkout"}>
         <Button style={{
            justifyContent: "center",
            alignItems: "center",
            marginTop: "10px",
          }}variant="contained">Comprar</Button>
+         </Link>
       </TableContainer>
  
     </>

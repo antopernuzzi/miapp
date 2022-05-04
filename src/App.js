@@ -9,6 +9,7 @@ import ArtistListContainer from './Components/ArtistListContainer';
 import ItemListContainer from './Components/ItemListContainer';
 import CartContainer from './Components/CartContainer';
 import CartContext from './Context/CartContext';
+import Checkout from './Components/Checkout';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route exact path="/item/:id" element={<ItemDetailContainer />} />
           <Route exact path="/category/artistas" element={<ArtistListContainer />} />
           <Route exact path="/cart" element={<CartContainer/>} />
+          <Route exact path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
       </CartContext>
