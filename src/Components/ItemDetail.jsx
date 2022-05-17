@@ -16,8 +16,17 @@ export default function ItemDetail({ prod }) {
   const [count, setCount] = React.useState(0);
 
   const onAdd = (number) => {
-    setCount(number);
+    if(number<=0){
+      alert("Selecciona la cantidad de items a comprar.");
+    }
+    else if (number==1){
+      alert("Genial! agregaste un item al carrito.");
+    }
+    else{
+   
     alert("Genial! agregaste " + number + " items al carrito.");
+    }
+    setCount(number);
   };
   const theme = useTheme();
   
@@ -38,7 +47,7 @@ export default function ItemDetail({ prod }) {
               color="text.secondary"
               component="div"
             >
-              Anto pernuzzi
+             $ {prod.price}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -48,7 +57,8 @@ export default function ItemDetail({ prod }) {
               {prod.description}
             </Typography>
           </CardContent>
-          <Box sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
+          <CardContent sx={{ flex: "1 0 auto" }}>
+       
             {/*si la cantidad es mayor a 0 entonces muestro el boton de agregar al carrito*/}
             {count <= 0 ? (
               <ItemCount initial={0} stock={prod.stock} onAdd={onAdd} item={prod} />
@@ -62,11 +72,12 @@ export default function ItemDetail({ prod }) {
                 </Link>
               </Button>
             )}
-          </Box>
+          
+          </CardContent>
         </Box>
         <CardMedia
           component="img"
-          sx={{ width: "100%", height: "100%", objectFit: "cover" }}
+          sx={{ width: "50%", height: "50%", objectFit: "cover" }}
           image={prod.image}
           alt={prod.title}
         />

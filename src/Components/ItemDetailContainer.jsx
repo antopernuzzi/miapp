@@ -30,7 +30,6 @@ export default function ItemDetailContainer() {
   return (
     <>
     <Container>
-      Detalle de Item
       <ItemDetail prod={product}/>
     </Container>
       

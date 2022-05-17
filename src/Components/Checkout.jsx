@@ -20,7 +20,7 @@ export default function () {
   const [purchaseDone, setPurchaseDone] = useState(false);
 
   function savePurchase() {
-    alert("hoo has terminado tu compra");
+    alert("Genial has terminado tu compra.");
     const newDate = new Date();
 
     let newOrder = {
@@ -61,7 +61,8 @@ export default function () {
 
   return (
     <>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+    
+      <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
@@ -147,14 +148,23 @@ export default function () {
               >
                 Terminar compra
               </Button>
+             
             </>
           ) : (
             <>
               ¡Felicitaciones! Tu compra fue realizada con éxito.
+              <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              component="div"
+            >
               {name} Gracias por tu compra. Te enviaremos un mail a {email} con
-              todos los detalles de compra y envío. El código de tu operación
+              todos los detalles de compra y envío.
+            
+              El código de tu operación
               es: {orderId}
-              <Link to={"/"}>
+              </Typography>
+              <Link to={"/"}style={{textDecoration:"none"}}>
                 <Button variant="contained" sx={{ mt: 3, ml: 1 }}>
                   Volver
                 </Button>
@@ -163,6 +173,7 @@ export default function () {
           )}
         </Paper>
       </Container>
+    
     </>
   );
 }

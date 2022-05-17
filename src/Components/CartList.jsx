@@ -37,6 +37,7 @@ export default function CartList() {
 
   return (
     <>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="spanning table">
           <TableHead>
@@ -59,7 +60,7 @@ export default function CartList() {
           <TableBody>
             {cart.map((item) => (
               <TableRow key={item.id}>
-                  <TableCell><Avatar>
+                  <TableCell><Avatar src={item.image}>
                   {item.image}
                     </Avatar></TableCell>
                 <TableCell>{item.title}</TableCell>
@@ -96,15 +97,16 @@ export default function CartList() {
           </TableBody>
           
         </Table>
-        <Link to={"/checkout"}>
+        
+      </TableContainer>
+      <Link to={"/checkout"} style={{textDecoration:"none"}}>
         <Button style={{
            justifyContent: "center",
            alignItems: "center",
            marginTop: "10px",
          }}variant="contained">Comprar</Button>
          </Link>
-      </TableContainer>
- 
+         </Box>
     </>
   );
 }

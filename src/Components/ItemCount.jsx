@@ -34,9 +34,7 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
 
   return (
     <>
-      <br />  
-      Contador de items
-      <br />
+     
       <Box
         sx={{
           display: "flex",
