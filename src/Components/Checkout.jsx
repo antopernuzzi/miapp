@@ -9,16 +9,37 @@ import { Button } from "@mui/material";
 import { Context } from "../Context/CartContext";
 import { Link } from "react-router-dom";
 import { collection, getFirestore, addDoc } from "firebase/firestore";
+
+import { useForm } from "react-hook-form";
+import Input from '@mui/material/Input';
+import Label from '@mui/material/FormLabel';
+
 export default function () {
   const { totalPrice } = React.useContext(Context);
   const { cart } = React.useContext(Context);
   const [name, setName] = useState("");
   const [surName, setSurname] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [adress, setAdress] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [orderId, setOrderId] = useState("");
   const [purchaseDone, setPurchaseDone] = useState(false);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+ 
+//ACTION  BTN TERMINAR COMPRA
+  const onSubmit = (data) => {
+    console.log(data);
+    savePurchase();
+  };
+
+  //GUARDAR ORDEN DE COMPRA
   function savePurchase() {
     alert("Genial has terminado tu compra.");
     const newDate = new Date();
@@ -32,6 +53,8 @@ export default function () {
         email: email,
 
         adress: adress,
+        phone: phone,
+        postalCode: postalCode,
       },
 
       items: [...cart],
@@ -61,7 +84,6 @@ export default function () {
 
   return (
     <>
-    
       <Container component="main" maxWidth="sm" sx={{ mb: 20 }}>
         <Paper
           variant="outlined"
@@ -76,7 +98,7 @@ export default function () {
               <React.Fragment>
                 Completa con tus datos para finalizar tu compra
               </React.Fragment>
-              <Grid container spacing={3}>
+              {/* <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -140,31 +162,140 @@ export default function () {
                     }}
                   />
                 </Grid>
-              </Grid>
-              <Button
+              </Grid> */}
+              {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
+              {/* <FormControlUnstyled defaultValue="" required>
+  <Label>Name</Label>
+  <Input />
+  <HelperText />
+</FormControlUnstyled> */}
+              <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={6}>
+                <Grid item xs={12} sm={6}>
+          
+                <Input 
+                  
+                    placeholder="Nombre"
+                    name="name"
+                    type="text"
+                    {...register("name", { required: true, maxLength: 60 })}
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.name && <span>Ingrese este valor</span>}
+                  </small>
+               
+                </Grid>
+                <Grid item xs={12} sm={6}>
+            
+                 
+                <Input
+                    placeholder="Apellido"
+                    name="surName"
+                    type="text"
+                    {...register("surName", { required: true, maxLength: 60 })}
+                    value={surName}
+                    onChange={(e) => {
+                      setSurname(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.surName && <span>Ingrese este valor</span>}
+                  </small>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                 
+                <Input
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    {...register("email", { required: true })}
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.email && <span>Ingrese un valor valido</span>}
+                  </small>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                
+                  
+                <Input
+                    placeholder="Telefono"
+                    type="number"
+                    name="phone"
+                    {...register("phone", { required: true })}
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.phone && <span>Ingrese un valor valido</span>}
+                  </small>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                  
+                <Input
+                    placeholder="Direccion"
+                    type="text"
+                    name="adress"
+                    {...register("adress", { required: true })}
+                    value={adress}
+                    onChange={(e) => {
+                      setAdress(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.adress && <span>Ingrese un valor valido</span>}
+                  </small>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                  
+                <Input
+                    placeholder="CP"
+                    type="text"
+                    name="postalCode"
+                    {...register("postalCode", { required: true })}
+                    value={postalCode}
+                    onChange={(e) => {
+                      setPostalCode(e.target.value);
+                    }}
+                  />
+                  <small className="text-danger">
+                    {errors?.postalCode && <span>Ingrese un valor valido</span>}
+                  </small>
+                  </Grid>
+                  </Grid>
+                  <Button
+                type="submit"
                 variant="contained"
-                onClick={savePurchase}
                 sx={{ mt: 3, ml: 1 }}
               >
                 Terminar compra
               </Button>
-             
+               
+              </form>
+           
             </>
           ) : (
             <>
               ¡Felicitaciones! Tu compra fue realizada con éxito.
               <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-            >
-              {name} Gracias por tu compra. Te enviaremos un mail a {email} con
-              todos los detalles de compra y envío.
-            
-              El código de tu operación
-              es: {orderId}
+                variant="subtitle1"
+                color="text.secondary"
+                component="div"
+              >
+                {name} Gracias por tu compra. Te enviaremos un mail a {email}{" "}
+                con todos los detalles de compra y envío. El código de tu
+                operación es: {orderId}
               </Typography>
-              <Link to={"/"}style={{textDecoration:"none"}}>
+              <Link to={"/"} style={{ textDecoration: "none" }}>
                 <Button variant="contained" sx={{ mt: 3, ml: 1 }}>
                   Volver
                 </Button>
@@ -173,7 +304,6 @@ export default function () {
           )}
         </Paper>
       </Container>
-    
     </>
   );
 }
