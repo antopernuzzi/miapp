@@ -5,7 +5,12 @@ import Container from "@mui/material/Container";
 
 import { Context } from "../Context/CartContext";
 import { Link } from "react-router-dom";
-import { collection, getFirestore, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getFirestore,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -35,19 +40,15 @@ export default function () {
   //validaciones del form
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Nombre es requerido"),
-    surName: Yup.string()
-      .required("Apellido es requerido"),
+    surName: Yup.string().required("Apellido es requerido"),
     email: Yup.string()
       .required("Email es requerido")
       .email("Email es invalido"),
-    phone: Yup.string()
-      .required("Teléfono es requerido"),
+    phone: Yup.string().required("Teléfono es requerido"),
     adress: Yup.string()
       .required("Dirección es requerida")
       .max(60, "Dirección no debe exceder 60 caracteres"),
-    postalCode: Yup.string()
-      .required("Código postal es requerido"),
-   
+    postalCode: Yup.string().required("Código postal es requerido"),
   });
 
   //le paso las validaciones al hook form
@@ -86,7 +87,7 @@ export default function () {
 
       items: [...cart],
 
-      date: newDate,
+      date: serverTimestamp(),
 
       total: totalPrice,
     };
@@ -134,14 +135,12 @@ export default function () {
                     label="Nombre"
                     fullWidth
                     margin="dense"
-                    
                     {...register("name")}
                     error={errors.name ? true : false}
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
-                    
                   />
                   <Typography variant="inherit" color="textSecondary">
                     {errors.name?.message}
@@ -156,7 +155,6 @@ export default function () {
                     label="Apellido"
                     fullWidth
                     margin="dense"
-                    
                     {...register("surName")}
                     error={errors.surName ? true : false}
                     value={surName}
@@ -177,7 +175,6 @@ export default function () {
                     label="Email"
                     fullWidth
                     margin="dense"
-                    
                     {...register("email")}
                     error={errors.email ? true : false}
                     value={email}
@@ -197,7 +194,6 @@ export default function () {
                     label="Teléfono"
                     fullWidth
                     margin="dense"
-                   
                     {...register("phone")}
                     error={errors.phone ? true : false}
                     value={phone}
@@ -217,7 +213,6 @@ export default function () {
                     label="Dirección"
                     fullWidth
                     margin="dense"
-                    
                     {...register("adress")}
                     error={errors.adress ? true : false}
                     value={adress}
@@ -237,7 +232,6 @@ export default function () {
                     label="Código postal"
                     fullWidth
                     margin="dense"
-                    
                     {...register("postalCode")}
                     error={errors.postalCode ? true : false}
                     value={postalCode}
@@ -250,34 +244,42 @@ export default function () {
                   </Typography>
                 </Grid>
               </Grid>
-              <Box mt={3}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleSubmit(onSubmit)}
-            >
-              Terminar compra
-            </Button>
-            </Box>
-              
+              <Box mt={3} align="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit(onSubmit)}
+                >
+                  Terminar compra
+                </Button>
+              </Box>
             </>
           ) : (
             <>
-              ¡Felicitaciones! Tu compra fue realizada con éxito.
+              <Typography variant="h6" align="center" margin="dense">
+                ¡Felicitaciones! Tu compra fue realizada con éxito.
+              </Typography>
+
               <Typography
                 variant="subtitle1"
                 color="text.secondary"
                 component="div"
+                align="center"
               >
                 {name} Gracias por tu compra. Te enviaremos un mail a {email}{" "}
                 con todos los detalles de compra y envío. El código de tu
-                operación es: {orderId}
+                operación es:
               </Typography>
-              <Link to={"/"} style={{ textDecoration: "none" }}>
-                <Button variant="contained" sx={{ mt: 3, ml: 1 }}>
-                  Volver
-                </Button>
-              </Link>
+              <Typography variant="h6" align="center" margin="dense">
+                {orderId}
+              </Typography>
+              <Box align="center">
+                <Link to={"/"} style={{ textDecoration: "none" }}>
+                  <Button variant="contained" sx={{ mt: 3, ml: 1 }}>
+                    Volver
+                  </Button>
+                </Link>
+              </Box>
             </>
           )}
         </Paper>

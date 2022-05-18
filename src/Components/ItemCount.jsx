@@ -3,6 +3,7 @@ import { useState, useEffect} from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { Context } from "../Context/CartContext";
 
 
@@ -34,7 +35,14 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
 
   return (
     <>
-     
+      <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              component="div"
+              align="center"
+            >
+              Cantidad a comprar:
+            </Typography>
       <Box
         sx={{
           display: "flex",
@@ -46,6 +54,7 @@ export default function ItemCount({ initial, stock , onAdd, item}) {
           borderRadius: 1,
         }}
       >
+        
         <Button onClick={subs} variant="outlined" size="small"> - </Button>
         <p>{count}</p>
         <Button onClick={adding} variant="outlined" size="small"> + </Button>

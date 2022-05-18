@@ -27,9 +27,8 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function CartList() {
-  let { cart, subtotal, totalPrice, tax, TAX_RATE ,removeItem} = React.useContext(Context);
-
-  
+  let { cart, subtotal, totalPrice, tax, TAX_RATE, removeItem } =
+    React.useContext(Context);
 
   function ccyFormat(num) {
     return `${num.toFixed(2)}`;
@@ -37,76 +36,85 @@ export default function CartList() {
 
   return (
     <>
-    <Box sx={{ display: "flex", flexDirection: "column" }}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="spanning table">
-          <TableHead>
-            <TableRow>
-              <TableCell align="center" colSpan={4}>
-                Detalle
-              </TableCell>
-              <TableCell align="right">Eliminar</TableCell>
-              <TableCell align="right">Precio</TableCell>
-            </TableRow>
-            <TableRow>
-            <TableCell></TableCell>
-              <TableCell>Descripcion</TableCell>
-              <TableCell align="right">Cantidad</TableCell>
-              <TableCell align="right">Precio unitario</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right">Subtotal</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cart.map((item) => (
-              <TableRow key={item.id}>
-                  <TableCell><Avatar src={item.image}>
-                  {item.image}
-                    </Avatar></TableCell>
-                <TableCell>{item.title}</TableCell>
-                <TableCell align="right">{item.quantity}</TableCell>
-                <TableCell align="right">{item.price}</TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => removeItem(item.id)}edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" colSpan={4}>
+                  Detalle
                 </TableCell>
-                <TableCell align="right">
-                  {ccyFormat(item.price * item.quantity)}
-                </TableCell>
+                <TableCell align="right">Eliminar</TableCell>
+                <TableCell align="right">Precio</TableCell>
               </TableRow>
-            ))}
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell>Descripcion</TableCell>
+                <TableCell align="right">Cantidad</TableCell>
+                <TableCell align="right">Precio unitario</TableCell>
+                <TableCell align="right"></TableCell>
+                <TableCell align="right">Subtotal</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cart.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <Avatar src={item.image}>{item.image}</Avatar>
+                  </TableCell>
+                  <TableCell>{item.title}</TableCell>
+                  <TableCell align="right">{item.quantity}</TableCell>
+                  <TableCell align="right">{item.price}</TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      onClick={() => removeItem(item.id)}
+                      edge="end"
+                      aria-label="delete"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                  <TableCell align="right">
+                    {ccyFormat(item.price * item.quantity)}
+                  </TableCell>
+                </TableRow>
+              ))}
 
-            <TableRow>
-              <TableCell rowSpan={3} />
-              
-              <TableCell colSpan={4}>Subtotal</TableCell>
-              <TableCell align="right">{ccyFormat(subtotal)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={3}>Tax</TableCell>
-              <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
-                0
-              )} %`}</TableCell>
-              <TableCell align="right">{ccyFormat(tax)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={4}>Total</TableCell>
-              <TableCell align="right">{ccyFormat(totalPrice)}</TableCell>
-            </TableRow>
-          </TableBody>
-          
-        </Table>
+              <TableRow>
+                <TableCell rowSpan={3} />
+
+                <TableCell colSpan={4}>Subtotal</TableCell>
+                <TableCell align="right">{ccyFormat(subtotal)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={3}>Tax</TableCell>
+                <TableCell align="right">{`${(TAX_RATE * 100).toFixed(
+                  0
+                )} %`}</TableCell>
+                <TableCell align="right">{ccyFormat(tax)}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={4}>Total</TableCell>
+                <TableCell align="right">{ccyFormat(totalPrice)}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
         
-      </TableContainer>
-      <Link to={"/checkout"} style={{textDecoration:"none"}}>
-        <Button style={{
-           justifyContent: "center",
-           alignItems: "center",
-           marginTop: "10px",
-         }}variant="contained">Comprar</Button>
-         </Link>
-         </Box>
+        <Link to={"/checkout"} style={{ textDecoration: "none" }}>
+          <Button
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "10px",
+            }}
+            variant="contained"
+          >
+            Comprar
+          </Button>
+        </Link>
+        
+      </Box>
     </>
   );
 }

@@ -1,6 +1,11 @@
+# About this project 
+This project is an art store that sells both paintings and decorative objects.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Cloud Firestore
+This project use Firebase V9 for data storage.
 
 ## Available Scripts
 
@@ -13,6 +18,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### Library and framework
+This project use Material UI. MUI offers a comprehensive suite of UI tools to help you ship new features faster. 
+
+### Desing and images
+The images used in the project were uploaded to cloudinary.com . This application allows the storage of images by providing a url to access them.
+
+### gif purchase order 
+Visit this url for view the process [gif](https://res.cloudinary.com/dtbsvosyu/video/upload/v1652914722/samples/Objetos/procesogif_y558na.mp4)
 
 ### `npm test`
 

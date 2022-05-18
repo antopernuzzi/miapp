@@ -8,6 +8,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -56,6 +58,9 @@ export default function ItemDetail({ prod }) {
             >
               {prod.description}
             </Typography>
+            <Stack direction="row" spacing={1}>
+              <Chip label={prod.category} />
+            </Stack>
           </CardContent>
           <CardContent sx={{ flex: "1 0 auto" }}>
        
