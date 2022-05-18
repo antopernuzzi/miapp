@@ -1,18 +1,24 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
+
 import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+
 import { Context } from "../Context/CartContext";
 import { Link } from "react-router-dom";
 import { collection, getFirestore, addDoc } from "firebase/firestore";
 
-import { useForm } from "react-hook-form";
-import Input from '@mui/material/Input';
-import Label from '@mui/material/FormLabel';
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import Fragment from "react";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import { Box, FormControlLabel, Checkbox } from "@material-ui/core";
+import Input from "@mui/material/Input";
+import Label from "@mui/material/FormLabel";
 
 export default function () {
   const { totalPrice } = React.useContext(Context);
@@ -26,14 +32,35 @@ export default function () {
   const [orderId, setOrderId] = useState("");
   const [purchaseDone, setPurchaseDone] = useState(false);
 
+  //validaciones del form
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Nombre es requerido"),
+    surName: Yup.string()
+      .required("Apellido es requerido"),
+    email: Yup.string()
+      .required("Email es requerido")
+      .email("Email es invalido"),
+    phone: Yup.string()
+      .required("Teléfono es requerido"),
+    adress: Yup.string()
+      .required("Dirección es requerida")
+      .max(60, "Dirección no debe exceder 60 caracteres"),
+    postalCode: Yup.string()
+      .required("Código postal es requerido"),
+   
+  });
+
+  //le paso las validaciones al hook form
   const {
     register,
+    control,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm();
- 
-//ACTION  BTN TERMINAR COMPRA
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  //ACTION  BTN TERMINAR COMPRA
   const onSubmit = (data) => {
     console.log(data);
     savePurchase();
@@ -95,10 +122,10 @@ export default function () {
 
           {purchaseDone === false ? (
             <>
-              <React.Fragment>
-                Completa con tus datos para finalizar tu compra
-              </React.Fragment>
-              {/* <Grid container spacing={3}>
+              <Typography variant="h6" align="center" margin="dense">
+                Completa con tus datos para terminar la compra
+              </Typography>
+              <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -106,13 +133,19 @@ export default function () {
                     name="name"
                     label="Nombre"
                     fullWidth
-                    autoComplete="family-name"
-                    variant="standard"
+                    margin="dense"
+                    
+                    {...register("name")}
+                    error={errors.name ? true : false}
                     value={name}
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
+                    
                   />
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.name?.message}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -122,13 +155,18 @@ export default function () {
                     name="surName"
                     label="Apellido"
                     fullWidth
-                    autoComplete="family-name"
-                    variant="standard"
+                    margin="dense"
+                    
+                    {...register("surName")}
+                    error={errors.surName ? true : false}
                     value={surName}
                     onChange={(e) => {
                       setSurname(e.target.value);
                     }}
                   />
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.surName?.message}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
@@ -138,15 +176,39 @@ export default function () {
                     name="email"
                     label="Email"
                     fullWidth
-                    autoComplete="family-name"
-                    variant="standard"
+                    margin="dense"
+                    
+                    {...register("email")}
+                    error={errors.email ? true : false}
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.email?.message}
+                  </Typography>
                 </Grid>
-
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    required
+                    id="phone"
+                    name="phone"
+                    label="Teléfono"
+                    fullWidth
+                    margin="dense"
+                   
+                    {...register("phone")}
+                    error={errors.phone ? true : false}
+                    value={phone}
+                    onChange={(e) => {
+                      setPhone(e.target.value);
+                    }}
+                  />
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.phone?.message}
+                  </Typography>
+                </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
                     required
@@ -154,134 +216,50 @@ export default function () {
                     name="adress"
                     label="Dirección"
                     fullWidth
-                    autoComplete="family-name"
-                    variant="standard"
+                    margin="dense"
+                    
+                    {...register("adress")}
+                    error={errors.adress ? true : false}
                     value={adress}
                     onChange={(e) => {
                       setAdress(e.target.value);
                     }}
                   />
-                </Grid>
-              </Grid> */}
-              {/* "handleSubmit" will validate your inputs before invoking "onSubmit" */}
-              {/* <FormControlUnstyled defaultValue="" required>
-  <Label>Name</Label>
-  <Input />
-  <HelperText />
-</FormControlUnstyled> */}
-              <form onSubmit={handleSubmit(onSubmit)}>
-              <Grid container spacing={6}>
-                <Grid item xs={12} sm={6}>
-          
-                <Input 
-                  
-                    placeholder="Nombre"
-                    name="name"
-                    type="text"
-                    {...register("name", { required: true, maxLength: 60 })}
-                    value={name}
-                    onChange={(e) => {
-                      setName(e.target.value);
-                    }}
-                  />
-                  <small className="text-danger">
-                    {errors?.name && <span>Ingrese este valor</span>}
-                  </small>
-               
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.adress?.message}
+                  </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
-            
-                 
-                <Input
-                    placeholder="Apellido"
-                    name="surName"
-                    type="text"
-                    {...register("surName", { required: true, maxLength: 60 })}
-                    value={surName}
-                    onChange={(e) => {
-                      setSurname(e.target.value);
-                    }}
-                  />
-                  <small className="text-danger">
-                    {errors?.surName && <span>Ingrese este valor</span>}
-                  </small>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                 
-                <Input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    {...register("email", { required: true })}
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                  />
-                  <small className="text-danger">
-                    {errors?.email && <span>Ingrese un valor valido</span>}
-                  </small>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                
-                  
-                <Input
-                    placeholder="Telefono"
-                    type="number"
-                    name="phone"
-                    {...register("phone", { required: true })}
-                    value={phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                    }}
-                  />
-                  <small className="text-danger">
-                    {errors?.phone && <span>Ingrese un valor valido</span>}
-                  </small>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                  
-                <Input
-                    placeholder="Direccion"
-                    type="text"
-                    name="adress"
-                    {...register("adress", { required: true })}
-                    value={adress}
-                    onChange={(e) => {
-                      setAdress(e.target.value);
-                    }}
-                  />
-                  <small className="text-danger">
-                    {errors?.adress && <span>Ingrese un valor valido</span>}
-                  </small>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                  
-                <Input
-                    placeholder="CP"
-                    type="text"
+                  <TextField
+                    required
+                    id="postalCode"
                     name="postalCode"
-                    {...register("postalCode", { required: true })}
+                    label="Código postal"
+                    fullWidth
+                    margin="dense"
+                    
+                    {...register("postalCode")}
+                    error={errors.postalCode ? true : false}
                     value={postalCode}
                     onChange={(e) => {
                       setPostalCode(e.target.value);
                     }}
                   />
-                  <small className="text-danger">
-                    {errors?.postalCode && <span>Ingrese un valor valido</span>}
-                  </small>
-                  </Grid>
-                  </Grid>
-                  <Button
-                type="submit"
-                variant="contained"
-                sx={{ mt: 3, ml: 1 }}
-              >
-                Terminar compra
-              </Button>
-               
-              </form>
-           
+                  <Typography variant="inherit" color="textSecondary">
+                    {errors.postalCode?.message}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Box mt={3}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Terminar compra
+            </Button>
+            </Box>
+              
             </>
           ) : (
             <>
